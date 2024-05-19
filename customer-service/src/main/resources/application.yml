@@ -1,0 +1,54 @@
+spring:
+  kafka:
+    bootstrap-servers: 0.0.0.0:29092
+  mail:
+    host: localhost
+    port: 1025
+    username: hello
+    password: hello
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  application:
+    name: customer-service
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/customer-service?user=root&password=test
+    name: root
+    password: test
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+    fetch-registry: true
+    register-with-eureka: true
+
+server:
+  port: 8081
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      customerService:
+        sliding-window-type: time_based
+        sliding-window-size: 100
+        slow-call-rate-threshold: 90
+        failure-rate-threshold: 50
+        wait-duration-in-open-state:
+          seconds: 1
+        slow-call-duration-threshold:
+          seconds: 3
+        max-wait-duration-in-half-open-state:
+          seconds: 5
+        minimum-number-of-calls: 10
+        permitted-number-of-calls-in-half-open-state: 10
+

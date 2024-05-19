@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <title>Добавить продукт</title>
+</head>
+<body>
+<form role="form" method="post" th:action="@{/manager/tools/saveProduct}" th:object="${product}" >
+    <div align="center">
+        <div>
+            <input type="text"  id="productName" name="productName" th:field="*{productName}" placeholder="Название товара">
+            <p th:if="${#fields.hasErrors('productName')}"  th:errors="*{productName}"></p>
+        </div>
+        <div>
+            <input type="text" id="descriptionOfProduct" name="descriptionOfProduct" th:field="*{descriptionOfProduct}" placeholder="Описание товара">
+            <p th:if="${#fields.hasErrors('descriptionOfProduct')}" th:errors="*{descriptionOfProduct}"></p>
+        </div>
+        <div>
+            <input type="text" id="price" name="price" th:field="*{price}" placeholder="Цена">
+            <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></p>
+        </div>
+        <div>
+            <input type="text" id="productWeight" name="productWeight" th:field="*{productWeight}" placeholder="Масса">
+            <p th:if="${#fields.hasErrors('productWeight')}" th:errors="*{productWeight}"></p>
+        </div>
+        <div>
+            <input type="text" id="photoUrl" name="photoUrl" th:field="*{photoUrl}" placeholder="url фотографии">
+            <p th:if="${#fields.hasErrors('photoUrl')}" th:errors="*{photoUrl}"></p>
+        </div>
+        <button type="submit" >Создать</button>
+    </div>
+</form>
+</body>
+</html>

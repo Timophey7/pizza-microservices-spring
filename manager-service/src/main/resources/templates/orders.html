@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Заказы</title>
+</head>
+<body>
+<div th:each="order:${orders}">
+    <div>
+        <p th:text="${order.productName}"></p>
+        <p th:text="${order.productPrice}"></p>
+    </div>
+    <a th:href="@{/manager/tools/orderComplete/{id}(id=${order.id})}">Заказ выполнен</a>
+</div>
+</body>
+</html>

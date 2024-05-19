@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/registration.css">
+</head>
+<body>
+<div class="container">
+    <form role="form" method="post" th:action="@{/registration}" th:object="${userInfo}" class="registration-form">
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" th:field="*{email}" placeholder="Введите ваш email">
+            <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+        </div>
+        <div>
+            <label for="name">Имя пользователя:</label>
+            <input type="text" id="name" name="name" th:field="*{name}" placeholder="Введите ваше имя">
+            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+        </div>
+        <div>
+            <label for="password">Пароль:</label>
+            <input type="password" id="password" name="password" th:field="*{password}" placeholder="Введите пароль">
+            <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+        </div>
+        <div>
+            <label for="userAddress">Адрес:</label>
+            <input type="text" id="userAddress" name="userAddress" th:field="*{userAddress}" placeholder="Введите ваш адрес">
+            <p th:if="${#fields.hasErrors('userAddress')}" th:errors="*{userAddress}"></p>
+        </div>
+        <div>
+            <label for="userNumber">Номер телефона:</label>
+            <input type="text" id="userNumber" name="userNumber" th:field="*{userNumber}" placeholder="Введите ваш номер телефона">
+            <p th:if="${#fields.hasErrors('userNumber')}" th:errors="*{userNumber}"></p>
+        </div>
+        <input type="submit" value="Зарегистрироваться" class="register-btn"/>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Пожалуйста, войдите</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/login-page.css">
+</head>
+<body>
+<h1>Пожалуйста, войдите</h1>
+<div th:if="${param.error}">
+    Неверные учетные данные.</div>
+<div th:if="${param.logout}">
+    Вы успешно вышли.</div>
+<form th:action="@{/v1/security/login}" method="post" class="login-form">
+    <div>
+        <input type="text" name="username" placeholder="Имя пользователя" class="input-field"/>
+    </div>
+    <div>
+        <input type="password" name="password" placeholder="Пароль" class="input-field"/>
+    </div>
+    <input type="submit" value="Войти" class="login-btn"/>
+</form>
+<a th:href="@{/registration}" class="register-link">Зарегистрироваться!</a>
+</body>
+</html>

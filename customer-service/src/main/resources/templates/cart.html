@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Заказ пиццы</title>
+    <link type="text/css" rel="stylesheet" href="/static/css/cart.css">
+</head>
+<body>
+<div class="cart-container" th:each="cart:${carts}">
+    <div class="product-item">
+        <img th:src="${cart.productUrl}" class="product-image">
+        <p class="product-name" th:text="${cart.productName}"></p>
+        <p class="product-price" th:text="${cart.productPrice}"></p>
+        <a th:href="@{/user/deleteProduct/{id}(id=${cart.id})}" class="remove-btn">Убрать из корзины</a>
+    </div>
+</div>
+<div class="cart-summary">
+    <label>Количество товаров:</label>
+    <p th:text="${carts.size()}"></p>
+    <label>Итоговая сумма:</label>
+    <p th:text="${resultPrice}"></p>
+    <a th:href="@{/user/createOrder}" class="order-btn">Сделать заказ</a>
+</div>
+</body>
+</html>
