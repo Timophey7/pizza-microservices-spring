@@ -1,4 +1,4 @@
-package com.menuservice.menuservice.service;
+package com.menuservice.menuservice.service.impl;
 
 import com.menuservice.menuservice.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;

@@ -10,7 +10,7 @@
         <p th:text="${order.productName}"></p>
         <p th:text="${order.productPrice}"></p>
     </div>
-    <a th:href="@{/manager/tools/orderComplete/{id}(id=${order.id})}">Заказ выполнен</a>
+    <a th:href="@{/manager/tools/orderComplete/{id}(id=${order.orderId})}">Заказ выполнен</a>
 </div>
 </body>
 </html>

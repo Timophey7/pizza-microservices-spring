@@ -67,8 +67,8 @@ public class SecurityController {
         return "confirmation-page";
     }
 
-    @PostMapping("/confrimToken")
-    public String confrimToken(@Valid @ModelAttribute("token") String token, BindingResult bindingResult,HttpSession session) {
+    @PostMapping("/confirmToken")
+    public String confirmToken(@Valid @ModelAttribute("token") String token, BindingResult bindingResult, HttpSession session) {
         if (bindingResult.hasErrors()){
             return "redirect:/v1/security/confirmation";
         }

@@ -1,7 +1,7 @@
 package com.menuservice.menuservice.controller;
 
 import com.menuservice.menuservice.model.ProductResponse;
-import com.menuservice.menuservice.service.ProductService;
+import com.menuservice.menuservice.service.impl.ProductServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,11 +12,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MenuController {
 
-    private final ProductService productService;
+    private final ProductServiceImpl productServiceImpl;
 
     @GetMapping("/getAllMenu")
     public List<ProductResponse> getAllProducts(){
-        List<ProductResponse> productServiceAllProducts = productService.getAllProducts();
+        List<ProductResponse> productServiceAllProducts = productServiceImpl.getAllProducts();
         return productServiceAllProducts;
     }
 

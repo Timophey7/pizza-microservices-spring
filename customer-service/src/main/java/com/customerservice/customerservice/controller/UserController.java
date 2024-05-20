@@ -5,7 +5,7 @@ package com.customerservice.customerservice.controller;
 import com.customerservice.customerservice.models.Cart;
 import com.customerservice.customerservice.models.CartResponse;
 import com.customerservice.customerservice.models.ProductResponse;
-import com.customerservice.customerservice.service.UserService;
+import com.customerservice.customerservice.service.impl.UserServiceImpl;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -23,14 +23,14 @@ public class UserController {
 
     private final KafkaTemplate<String,CartResponse> kafkaTemplate;
 
-    private final UserService userService;
+    private final UserServiceImpl userServiceImpl;
 
     private static final String CUSTOMER_SERVICE = "customerService";
 
     @GetMapping("menuList")
     @CircuitBreaker(name = CUSTOMER_SERVICE,fallbackMethod = "fallbackMethod")
     public String menu(Model model){
-        List<ProductResponse> allMenu = userService.getAllMenu();
+        List<ProductResponse> allMenu = userServiceImpl.getAllMenu();
         model.addAttribute("allMenu",allMenu);
         return "menu";
     }
@@ -44,14 +44,14 @@ public class UserController {
     @GetMapping("/addInCart/{productName}")
     public String addInCart(@PathVariable("productName")String productName){
 
-        List<ProductResponse> allMenu = userService.getAllMenu();
+        List<ProductResponse> allMenu = userServiceImpl.getAllMenu();
         for(ProductResponse productResponse : allMenu){
             if (productResponse.getProductName().equals(productName)){
-                Cart cart = userService.mapToCart(productResponse);
-                CartResponse cartResponse = userService.mapToCartResponse(cart);
+                Cart cart = userServiceImpl.mapToCart(productResponse);
+                CartResponse cartResponse = userServiceImpl.mapToCartResponse(cart);
                 String key = String.valueOf(cartResponse.hashCode());
                 kafkaTemplate.send(key,cartResponse);
-                userService.saveCart(cart);
+                userServiceImpl.saveCart(cart);
             }
         }
 
@@ -60,9 +60,9 @@ public class UserController {
 
     @GetMapping("/cart")
     public String cart(Model model){
-        List<Cart> allProductFromCart = userService.getAllProductFromCart();
+        List<Cart> allProductFromCart = userServiceImpl.getAllProductFromCart();
         List<CartResponse> cartResponses = allProductFromCart.stream()
-                .map(m -> userService.mapToCartResponse(m))
+                .map(m -> userServiceImpl.mapToCartResponse(m))
                 .collect(Collectors.toList());
         model.addAttribute("carts", cartResponses);
         int resultPrice = cartResponses.stream().mapToInt(CartResponse::getProductPrice).sum();
@@ -81,7 +81,7 @@ public class UserController {
     @GetMapping("/deleteProduct/{id}")
     public String deleteProduct(@PathVariable("id")int id){
 
-        userService.deleteProductFromCardById(id);
+        userServiceImpl.deleteProductFromCardById(id);
 
         return "redirect:/user/cart";
 

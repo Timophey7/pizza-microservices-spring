@@ -2,11 +2,10 @@ package com.menuservice.menuservice.controller;
 
 
 
-import com.menuservice.menuservice.model.CartResponse;
 import com.menuservice.menuservice.model.Order;
 import com.menuservice.menuservice.model.Product;
-import com.menuservice.menuservice.service.OrderService;
-import com.menuservice.menuservice.service.ProductService;
+import com.menuservice.menuservice.service.impl.OrderServiceImpl;
+import com.menuservice.menuservice.service.impl.ProductServiceImpl;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,8 +22,8 @@ import java.util.List;
 public class ManagerController {
 
     private static final String MANAGER_SERVICE = "managerService";
-    private final OrderService orderService;
-    private final ProductService productService;
+    private final OrderServiceImpl orderService;
+    private final ProductServiceImpl productServiceImpl;
 
     @GetMapping("/")
     public String infoForManagers(){
@@ -46,7 +45,7 @@ public class ManagerController {
             model.addAttribute("product",product);
             return "add-product";
         }
-        productService.saveProduct(product);
+        productServiceImpl.saveProduct(product);
         return "redirect:/";
 
     }
@@ -70,7 +69,7 @@ public class ManagerController {
     @CircuitBreaker(name = MANAGER_SERVICE,fallbackMethod = "fallbackMethod")
     private String orderComplete(@PathVariable("id")int id){
 
-        productService.completeOrder(id);
+        productServiceImpl.completeOrder(id);
         return "redirect:/manager/tools/orders";
 
     }

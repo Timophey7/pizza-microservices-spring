@@ -2,8 +2,7 @@ package com.customerservice.customerservice.controller;
 
 import com.customerservice.customerservice.models.Cart;
 import com.customerservice.customerservice.models.CartResponse;
-import com.customerservice.customerservice.service.UserService;
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import com.customerservice.customerservice.service.impl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,14 +15,14 @@ import java.util.stream.Collectors;
 public class RestControllers {
 
 
-    private final UserService userService;
+    private final UserServiceImpl userServiceImpl;
 
 
     @GetMapping("/cartList")
     public List<CartResponse> getAllOrders(){
-        List<Cart> allProductFromCart = userService.getAllProductFromCart();
+        List<Cart> allProductFromCart = userServiceImpl.getAllProductFromCart();
         List<CartResponse> cartResponses = allProductFromCart.stream()
-                .map(m -> userService.mapToCartResponse(m))
+                .map(m -> userServiceImpl.mapToCartResponse(m))
                 .collect(Collectors.toList());
         return cartResponses;
     }
